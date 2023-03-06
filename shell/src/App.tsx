@@ -1,30 +1,30 @@
-import React, { JSX } from "react";
-import modules from "./../modules.json";
+import React, { lazy, useState } from "react"
+import modules from "./../modules.json"
 
-import app1Method from "app1/method";
+import app1Method from "app1/method"
 
 const ModuleMap = {
-  null: () => null,
-  app1: React.lazy(() => import("app1/index")),
-  app2: React.lazy(() => import("app2/index")),
-};
+  none: () => null,
+  app1: lazy(() => import("app1/index")),
+  app2: lazy(() => import("app2/index")),
+}
 
 if (Object.keys(modules).length !== Object.keys(ModuleMap).length - 1) {
-  throw new Error("ModuleMap and modules.json are out of sync");
+  throw new Error("ModuleMap and modules.json are out of sync")
 }
 
 const ComponentsMap = {
-  App2Button: React.lazy(() => import("app2/Button")),
-};
+  App2Button: lazy(() => import("app2/Button")),
+}
 
 const App = () => {
-  const [module, setModule] = React.useState<JSX.Element | null>(null);
-  const Module = ModuleMap[module];
+  const [module, setModule] = useState<string>("none")
+  const Module = ModuleMap[module]
 
   return (
     <div>
       <h1>shell</h1>
-      <button onClick={() => setModule(null)}>no module</button>
+      <button onClick={() => setModule("none")}>no module</button>
       <button onClick={() => setModule("app1")}>app1</button>
       <button onClick={() => setModule("app2")}>app2</button>
       <div>
@@ -40,7 +40,7 @@ const App = () => {
         </React.Suspense>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
