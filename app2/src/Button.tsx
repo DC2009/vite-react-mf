@@ -1,5 +1,13 @@
-import React from "react";
+import React, { ReactNode } from "react"
 
-export default function Button(props) {
-  return <button {...props}>App2 Button</button>;
+interface ButtonProps {
+  children: ReactNode
+  onClick?: () => void
+}
+
+export default function Button({
+  children = "App2 button",
+  ...props
+}: ButtonProps) {
+  return <button {...props}>{children}</button>
 }
